@@ -1,6 +1,8 @@
-.form-container {
-  background-color: aqua;
-  height: 100%;
-  width: 200%;
-  
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: block;
+  text-align: left;
 }

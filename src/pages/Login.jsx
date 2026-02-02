@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import "./Login.css";
+
 const Login = () => {
   return (
     <div className="form-container">
-      <h1 className="form-title">LOGIN</h1>
+      {/* Page Title */}
+      <h1 className="form-title">Welcome Back</h1>
+
+      {/* Login Form */}
       <form>
-        {/* Email Address Field */}
+        {/* Email Field */}
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input
@@ -30,6 +34,11 @@ const Login = () => {
           Login
         </button>
       </form>
+      {/*link to Register Page */}
+      <p className="link-text">
+        Don't have an account? <a href="/Register">Register here</a>
+      </p>
+      
     </div>
   );
 };
