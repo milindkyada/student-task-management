@@ -1,78 +1,101 @@
-import React, { useState } from "react";
-import "./Login.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
-  // input change
-  const handleChange = (e) => {
+ 
+  const handleInputChange = (e) => {
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value,
     });
-    setError("");
+
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    });
   };
 
-  // submit
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!loginData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!loginData.password.trim()) {
+      newErrors.password = "Password is required.";
+    } else if (loginData.password.length < 6) {
+      newErrors.password = "Minimum 6 characters required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const storedData = JSON.parse(localStorage.getItem("authData"));
-
-    if (!storedData) {
-      setError("No user found. Please register first.");
-      return;
+    if (validate()) {
+      const user = JSON.parse(localStorage.getItem("authData"));
+      if(user && loginData.email === user.email && loginData.password ===user.password){
+        localStorage.setItem("loginData",JSON.stringify(loginData));
+      navigate("/Dashboard")
     }
-
-    if (
-      loginData.email === storedData.email &&
-      loginData.password === storedData.password
-    ) {
-      alert("Login Successful ✅");
-      navigate("/"); // or dashboard page
-    } else {
-      setError("Invalid email or password ❌");
+     
+    else{
+      alert('invalid email or password')
     }
-  };
-
+  }
+  else{
+    alert('Somthing went wrong!')
+  }
+}
   return (
     <div className="form-container">
-      <h1 className="form-title">Welcome Back</h1>
+      <h1 className="form-title">LOGIN</h1>
 
       <form onSubmit={handleSubmit}>
         {/* Email */}
         <div className="form-group">
-          <label>Email Address</label>
+          <label htmlFor="email">Email Address</label>
           <input
             type="email"
+            id="email"
             name="email"
-            placeholder="Enter your email"
             value={loginData.email}
-            onChange={handleChange}
+            placeholder="Enter your email"
+            onChange={handleInputChange}
           />
+          {errors.email && <span className="error">{errors.email}</span>}
         </div>
 
         {/* Password */}
         <div className="form-group">
-          <label>Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
+            id="password"
             name="password"
-            placeholder="Enter your password"
             value={loginData.password}
-            onChange={handleChange}
+            placeholder="Enter your password"
+            onChange={handleInputChange}
           />
+          {errors.password && (
+            <span className="error">{errors.password}</span>
+          )}
         </div>
-
-        {error && <span className="error">{error}</span>}
 
         <button type="submit" className="btn-primary">
           Login
