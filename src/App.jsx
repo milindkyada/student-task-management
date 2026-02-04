@@ -2,6 +2,7 @@ import "./App.css";
 import Login from "./pages/login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import React from "react";
 import {
   createBrowserRouter,
   Navigate,

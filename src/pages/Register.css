@@ -1,7 +1,7 @@
 body {
   font-family: "Segoe UI", Tahoma, Genev, a, Verdana, sans-serif;
-  /*background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);*/
-  background-image: url('https://i.pinimg.com/originals/1a/45/02/1a450249b8b804a1c72a3c532d95dd5d.jpg?nii=t');
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  /* background-image: url('https://i.pinimg.com/originals/1a/45/02/1a450249b8b804a1c72a3c532d95dd5d.jpg?nii=t'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
