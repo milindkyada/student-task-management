@@ -1,16 +1,17 @@
 import React from "react";
 
-const TaskList = () => {
+const TaskList = ({ tasks }) => {
   return (
     <div className="task-grid">
       {/*Task card 1 */}
-      <div className="task-card" style={{ position: "relative" }}>
-        <h3>Complete React Assignment</h3>
-        <p>Finish task Manager UI and styling</p>
+      {tasks.map((task) => (
+        <div className="task-card" style={{ position: "relative" }}>
+        <h3 >{task.title}</h3>
+        <p>{task.description}</p>
 
         <div className="task-meta">
-          <span>Due: 2026-02-10</span>
-          <span className="priority-badge priority-high">High</span>
+          <span>Due: {task.dueDate}</span>
+          <span className={`priority-badge priority-${task.priority.toLowerCase()}`}>{task.priority}</span>
         </div>
 
         <div className="task-actions">
@@ -38,7 +39,8 @@ const TaskList = () => {
             🗑️
           </button>
         </div>
-      </div>
+      </div>))}
+      
     </div>
   );
 };

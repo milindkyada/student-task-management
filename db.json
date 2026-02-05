@@ -4,9 +4,33 @@
       "id": "1",
       "title": "Welcome Task",
       "description": "this is your task served from json-server",
-      "dueDate": "2025-09-31",
+      "dueDate": "2026-03-31",
+      "completed": false,
+      "priority": "Low"
+    },
+     {
+      "id": "2",
+      "title": "Second Task",
+      "description": "this is your second task served from json-server",
+      "dueDate": "2026-04-01",
       "completed": false,
       "priority": "Medium"
+    },
+     {
+      "id": "3",
+      "title": "Third Task",
+      "description": "this is your task served from json-server",
+      "dueDate": "2026-04-30",
+      "completed": false,
+      "priority": "High"
+    },
+    {
+      "id": "4",
+      "title": "Fourth Task",
+      "description": "this is your fourth task served from json-server",
+      "dueDate": "2026-05-01",
+      "completed": false,
+      "priority": "High"
     }
   ]
 }
