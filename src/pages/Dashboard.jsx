@@ -1,36 +1,64 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import TaskList from "../components/TaskList";
 import { useNavigate } from "react-router-dom";
+import TaskForm from "../components/TaskForm";
+import TaskList from "../components/TaskList";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [tasks, setTasks] = useState([]);
 
-  const fetchData = async () => {
+  const [tasks, setTasks] = useState([]);
+  const [editTask, setEditTask] = useState(null);
+
+  // 🔄 fetch all tasks
+  const fetchTasks = async () => {
     try {
       const response = await fetch("http://localhost:3000/tasks");
       const data = await response.json();
       setTasks(data);
     } catch (error) {
-      console.log(error);
+      console.error("Fetch error:", error);
     }
   };
+
   useEffect(() => {
-    fetchData();
+    fetchTasks();
   }, []);
+
+  // ➕ / ✏️ add or update task in UI
+  const handleTaskSave = (task, isEdit) => {
+    if (isEdit) {
+      setTasks(tasks.map(t => (t.id === task.id ? task : t)));
+    } else {
+      setTasks([...tasks, task]);
+    }
+  };
+
+  // 🚪 logout
   const handleLogout = () => {
     localStorage.removeItem("loginData");
-    // localStorage.removeItem("authData")
-    // localStorage.clear()
-    navigate("/login");
+    navigate("/Login");
   };
+
   return (
     <div>
-      <Navbar title="Task Management" onLogout={handleLogout} />
+      <Navbar onLogout={handleLogout} />
 
-      <h1>MY TASKS</h1>
-      <TaskList tasks={tasks} />
+      {/* ADD / EDIT FORM */}
+      <TaskForm
+        editTask={editTask}
+        setEditTask={setEditTask}
+        onTaskSaved={handleTaskSave}
+      />
+
+      <h1 style={{ margin: "20px 0" }}>MY TASKS</h1>
+
+      {/* TASK LIST */}
+      <TaskList
+        tasks={tasks}
+        setTasks={setTasks}
+        onEdit={(task) => setEditTask(task)}
+      />
     </div>
   );
 };
