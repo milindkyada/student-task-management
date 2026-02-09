@@ -22,7 +22,7 @@
       "description": "this is your task served from json-server",
       "dueDate": "2026-04-30",
       "priority": "high",
-      "completed": false
+      "completed": true
     }
   ]
 }

@@ -9,6 +9,7 @@ const Dashboard = () => {
 
   const [tasks, setTasks] = useState([]);
   const [editTask, setEditTask] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   // 🔄 fetch all tasks
   const fetchTasks = async () => {
@@ -21,11 +22,14 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTasks();
+   useEffect(() => {
+    const loadTasks = async () => {
+      await fetchTasks();
+    };
+    loadTasks();
   }, []);
 
-  // ➕ / ✏️ add or update task in UI
+  // add or update task in UI
   const handleTaskSave = (task, isEdit) => {
     if (isEdit) {
       setTasks(tasks.map(t => (t.id === task.id ? task : t)));
@@ -42,14 +46,22 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Navbar onLogout={handleLogout} />
+      <Navbar 
+        title="Task Managment"
+        onAddTaskBtnClick={() => setShowForm(!showForm)}
+        isFormOpen={showForm}
+        onLogout={handleLogout} 
+
+      />
 
       {/* ADD / EDIT FORM */}
+      {showForm && (
       <TaskForm
         editTask={editTask}
         setEditTask={setEditTask}
         onTaskSaved={handleTaskSave}
       />
+      )}
 
       <h1 style={{ margin: "20px 0" }}>MY TASKS</h1>
 
@@ -63,4 +75,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard; 
+export default Dashboard;
