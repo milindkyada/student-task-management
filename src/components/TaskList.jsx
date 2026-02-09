@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const TaskList = ({ tasks, setTasks, onEdit }) => {
 
+  useEffect(() => {
+    console.log("Tasks updated:", tasks);
+  }, [tasks]);
   // ✔️ Complete / Incomplete
   const handleToggleComplete = async (task) => {
     try {
@@ -19,13 +22,14 @@ const TaskList = ({ tasks, setTasks, onEdit }) => {
       // update state
       setTasks(tasks.map(t => t.id === task.id ? updatedTask : t));
 
+      console.log("Updated task:", updatedTask);
+
       // update localStorage
       const stored = JSON.parse(localStorage.getItem("tasks")) || [];
       const updatedLocal = stored.map(t =>
         t.id === task.id ? updatedTask : t
       );
       localStorage.setItem("tasks", JSON.stringify(updatedLocal));
-
     } catch (err) {
       console.error(err);
     }
@@ -51,6 +55,7 @@ const TaskList = ({ tasks, setTasks, onEdit }) => {
       const updatedLocal = storedTasks.filter(task => task.id !== id);
       localStorage.setItem("tasks", JSON.stringify(updatedLocal));
 
+      console.log("Deleted task id:", id);
     } catch (error) {
       console.error("Delete error:", error);
     }
@@ -82,7 +87,7 @@ const TaskList = ({ tasks, setTasks, onEdit }) => {
             <button
               className="btn-icon"
               style={{ background: "#00d2ff" }}
-              onClick={() => onEdit(task)}
+              onClick={() => { console.log("Editing task:", task); onEdit(task); }}
             >
               ✏️
             </button>

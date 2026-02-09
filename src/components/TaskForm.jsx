@@ -79,21 +79,17 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
 
       // ✏️ EDIT
       if (editTask) {
-        const res = await fetch(
-          `http://localhost:3000/tasks/${editTask.id}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(taskData),
-          }
-        );
+        const res = await fetch(`http://localhost:3000/tasks/${editTask.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(taskData),
+        });
         savedTask = await res.json();
 
         // 🔁 update localStorage
-        const storedTasks =
-          JSON.parse(localStorage.getItem("tasks")) || [];
+        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         const updatedLocal = storedTasks.map((t) =>
-          t.id === savedTask.id ? savedTask : t
+          t.id === savedTask.id ? savedTask : t,
         );
         localStorage.setItem("tasks", JSON.stringify(updatedLocal));
 
@@ -112,11 +108,10 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
         savedTask = await res.json();
 
         // 💾 save to localStorage
-        const storedTasks =
-          JSON.parse(localStorage.getItem("tasks")) || [];
+        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
         localStorage.setItem(
           "tasks",
-          JSON.stringify([...storedTasks, savedTask])
+          JSON.stringify([...storedTasks, savedTask]),
         );
 
         onTaskSaved(savedTask, false);
@@ -138,6 +133,7 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
         {/* Task ID */}
         <div>
           <input
+            style={{ backgroundColor: "#302b63" , marginBottom: "8px"}}
             name="id"
             placeholder="Task ID"
             value={formData.id}
@@ -149,6 +145,7 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
         {/* Title */}
         <div>
           <input
+            style={{ backgroundColor: "#302b63" , marginBottom: "8px"}}
             name="title"
             placeholder="Task Title"
             value={formData.title}
@@ -160,6 +157,7 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
         {/* Description */}
         <div>
           <textarea
+            style={{ backgroundColor: "#302b63", marginBottom: "8px" }}
             name="description"
             placeholder="Description"
             rows="3"
@@ -172,9 +170,10 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
         </div>
 
         {/* Date + Priority */}
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div style={{ display: "flex", gap: "8px" }}>
           <div style={{ flex: 1 }}>
             <input
+              style={{ backgroundColor: "#302b63" , marginBottom: "8px"}}
               type="date"
               name="duedate"
               value={formData.duedate}
@@ -187,13 +186,14 @@ const TaskForm = ({ editTask, setEditTask, onTaskSaved }) => {
 
           <div style={{ flex: 1 }}>
             <select
+              style={{ backgroundColor: "#302b63", marginBottom: "8px" }}
               name="priority"
               value={formData.priority}
               onChange={handleChange}
             >
-              <option value="low">Low</option>
+              <option value="low" >Low</option>
               <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="high" >High</option>
             </select>
           </div>
         </div>
